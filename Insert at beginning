@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node {
+	int data;
+	struct node *next;
+};
+void display(struct node *head) {
+	if(head==NULL)
+	{
+		printf("List is empty");
+		return;
+	}
+	printf("\nElements in the list: ");
+	struct node *ptr = head;
+	while(ptr!=NULL) {
+		printf("%d ",ptr->data);
+		ptr=ptr->next;
+	}
+	return;
+}
+int count_of_nodes(struct node *head){
+	int count=0;
+	if(head==NULL)
+	{
+		return 0;
+	}
+	
+	struct node *ptr = head;
+	while(ptr!=NULL) {
+		count++;
+		ptr=ptr->next;
+	}
+	return count;
+}
+
+
+
+void insert_at_end(struct node *head,int d) {
+	struct node *temp = malloc(sizeof(struct node *));
+	temp->data=d;
+	temp->next=NULL;
+	
+	struct node *ptr = head;
+	while(ptr->next!=NULL){
+		ptr=ptr->next;
+	}
+	ptr->next=temp;
+}
+
+
+
+int main() {
+	int size;
+	struct node *head=NULL;
+	head = malloc(sizeof(struct node *));
+	head->data = 10;
+	head->next = NULL;
+	
+	struct node *current = malloc(sizeof(struct node *));
+	current->data = 20;
+	current->next = NULL;
+	
+	head->next = current;
+	
+	current = malloc(sizeof(struct node *));
+	current->data = 30;
+	current->next = NULL;
+	
+	//current->next = current1;
+	
+	head->next->next=current;
+	current = malloc(sizeof(struct node *));
+	current->data = 40;
+	current->next = NULL;
+	head->next->next->next=current;
+	
+	struct node *ptr = head;
+	while(ptr->next!=NULL) {
+		printf("%d ",ptr->data);
+		ptr=ptr->next;
+	}
+	
+	display(head);
+	size = count_of_nodes(head);
+	printf("\nNumber of nodes = %d",size);
+	
+	insert_at_end(head,50);
+	
+	display(head);
+	size = count_of_nodes(head);
+	printf("\nNumber of nodes = %d",size);
+		
+}
