@@ -1,0 +1,195 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+void display(struct node *head) {
+    if(head == NULL) {
+        printf("List is empty");
+        return;
+    }
+    printf("\nElements in the list: ");
+    struct node *ptr = head;
+    while(ptr != NULL) {
+        printf("%d ", ptr->data);
+        ptr = ptr->next;
+    }
+    return;
+}
+
+int count_of_nodes(struct node *head) {
+    int count = 0;
+    if(head == NULL) {
+        return 0;
+    }
+    struct node *ptr = head;
+    while(ptr != NULL) {
+        count++;
+        ptr = ptr->next;
+    }
+    return count;
+}
+
+void insert_at_end(struct node *head, int d) {
+    struct node *temp = malloc(sizeof(struct node));
+    temp->data = d;
+    temp->next = NULL;
+    struct node *ptr = head;
+    while(ptr->next != NULL) {
+        ptr = ptr->next;
+    }
+    ptr->next = temp;
+}
+
+void insert_at_front(struct node **head, int d) {
+    struct node *temp = malloc(sizeof(struct node));
+    temp->data = d;
+    temp->next = *head;
+    *head = temp;
+}
+
+void insert_at_pos(struct node **head, int pos, int d, int size) {
+    if(pos < 1 || pos > size + 1) {
+        printf("INVALID POSITION");
+        return;
+    }
+    struct node *temp = malloc(sizeof(struct node));
+    temp->data = d;
+    temp->next = NULL;
+    if(pos == 1) {
+        temp->next = *head;
+        *head = temp;
+        return;
+    }
+    struct node *ptr = *head;
+    pos--;
+    while(pos != 1) {
+        ptr = ptr->next;
+        pos--;
+    }
+    temp->next = ptr->next;
+    ptr->next = temp;
+}
+
+void delete_at_end(struct node *head) {
+    if(head == NULL || head->next == NULL) {
+        printf("List is empty or has only one element.");
+        return;
+    }
+    struct node *prev = NULL;
+    struct node *ptr = head;
+    while(ptr->next != NULL) {
+        prev = ptr;
+        ptr = ptr->next;
+    }
+    prev->next = NULL;
+    free(ptr);
+}
+
+void delete_at_front(struct node **head) {
+    if(*head == NULL) {
+        printf("List is empty.");
+        return;
+    }
+    struct node *temp = *head;
+    *head = (*head)->next;
+    free(temp);
+}
+
+void delete_at_pos(struct node **head, int pos, int size) {
+    if(*head == NULL || pos < 1 || pos > size) {
+        printf("Invalid operation.");
+        return;
+    }
+    struct node *prev = NULL;
+    struct node *ptr = *head;
+    if(pos == 1) {
+        *head = (*head)->next;
+        free(ptr);
+        return;
+    }
+    pos--;
+    while(pos != 0) {
+        prev = ptr;
+        ptr = ptr->next;
+        pos--;
+    }
+    prev->next = ptr->next;
+    free(ptr);
+}
+
+int main() {
+    int size;
+    struct node *head = NULL;
+    head = malloc(sizeof(struct node));
+    head->data = 10;
+    head->next = NULL;
+
+    struct node *current = malloc(sizeof(struct node));
+    current->data = 20;
+    current->next = NULL;
+
+    head->next = current;
+
+    current = malloc(sizeof(struct node));
+    current->data = 30;
+    current->next = NULL;
+
+    head->next->next = current;
+
+    current = malloc(sizeof(struct node));
+    current->data = 40;
+    current->next = NULL;
+    head->next->next->next = current;
+
+    struct node *ptr = head;
+    while(ptr != NULL) {
+        printf("%d ", ptr->data);
+        ptr = ptr->next;
+    }
+
+    display(head);
+    size = count_of_nodes(head);
+    printf("\nNumber of nodes = %d", size);
+
+    insert_at_end(head, 50);
+
+    display(head);
+    size = count_of_nodes(head);
+    printf("\nNumber of nodes = %d", size);
+
+    insert_at_front(&head, 70);
+
+    display(head);
+    size = count_of_nodes(head);
+    printf("\nNumber of nodes = %d", size);
+
+    insert_at_pos(&head, 3, 60, count_of_nodes(head));
+
+    display(head);
+    size = count_of_nodes(head);
+    printf("\nNumber of nodes = %d", size);
+
+    delete_at_end(head);
+
+    display(head);
+    size = count_of_nodes(head);
+    printf("\nNumber of nodes = %d", size);
+
+    delete_at_front(&head);
+
+    display(head);
+    size = count_of_nodes(head);
+    printf("\nNumber of nodes = %d", size);
+
+    delete_at_pos(&head, 2, count_of_nodes(head));
+
+    display(head);
+    size = count_of_nodes(head);
+    printf("\nNumber of nodes = %d", size);
+
+    return 0;
+}
