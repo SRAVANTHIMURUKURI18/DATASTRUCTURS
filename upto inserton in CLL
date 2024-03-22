@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node *next;
+};
+void display(struct node *tail){
+	if(tail==NULL){
+		printf("\nList is empty");
+		return;
+	}
+	printf("\n");
+	struct node *ptr=tail->next;
+	do{
+		printf("%d ",ptr->data);
+		ptr=ptr->next;
+	}while(ptr!=tail->next);
+}
+void create_node(struct node **tail,int d){
+	struct node *temp=(struct node *)malloc(sizeof(struct node *));
+	temp->data=d;
+	temp->next=temp;
+	*tail=temp;
+}
+void insert_at_beginning(struct node **tail,int d){
+	if(*tail==NULL){
+		printf("\nList is empty");
+		return;
+	}
+	struct node *temp=(struct node *)malloc(sizeof(struct node *));
+	temp->data=d;
+	temp->next=(*tail)->next;
+	(*tail)->next=temp;
+}
+void insert_at_end(struct node **tail,int d){
+	if(*tail==NULL){
+		printf("\nList is empty");
+		return;
+	}
+	struct node *temp=(struct node *)malloc(sizeof(struct node *));
+	temp->data=d;
+	temp->next=(*tail)->next;
+	(*tail)->next=temp;
+	(*tail)=temp;
+}
+void insert_at_position(struct node **tail,int d,int pos){
+	if(*tail==NULL){
+		printf("\nList is empty");
+		return;
+	}
+	struct node *ptr=(*tail)->next;
+	if(pos==1){
+		insert_at_beginning(tail,d);
+		return;
+	}
+	pos--;
+	while(pos>1){
+		ptr=ptr->next;
+		pos--;
+		if(ptr==(*tail)->next)
+		{
+			printf("Invalid Position\n");
+			return;	
+		}
+	}
+	struct node *temp=(struct node *)malloc(sizeof(struct node *));
+	temp->data=d;
+	temp->next=ptr->next;
+	ptr->next=temp;
+	if(ptr==(*tail)){
+		*tail=temp;
+		return;
+	}
+}
+int main(){
+	struct node *tail=NULL;
+	create_node(&tail,13);
+	display(tail);
+
+	insert_at_beginning(&tail,18);
+	display(tail);
+	insert_at_end(&tail,73);
+	display(tail);
+	insert_at_position(&tail,32,4);
+	display(tail);
+	insert_at_position(&tail,7,5);
+	display(tail);
+	insert_at_position(&tail,17,2);
+	display(tail);
+	
+}
