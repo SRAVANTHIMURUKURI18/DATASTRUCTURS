@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+void push(int x) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow\n");
+        exit(1);
+    }
+    top++;
+    stack[top] = x;
+}
+
+int pop() {
+    if (top == -1) {
+        printf("Stack Underflow\n");
+        exit(1);
+    }
+    int val = stack[top];
+    top--;
+    return val;
+}
+
+int evaluatePostfix(char postfix[]) {
+    int i, operand1, operand2;
+    for (i = 0; postfix[i] != '\0'; i++) {
+        if (postfix[i] >= '0' && postfix[i] <= '9') {
+            push(postfix[i] - '0');
+        } else {
+            operand2 = pop();
+            operand1 = pop();
+            switch(postfix[i]) {
+                case '+': push(operand1 + operand2); break;
+                case '-': push(operand1 - operand2); break;
+                case '*': push(operand1 * operand2); break;
+                case '/': push(operand1 / operand2); break;
+            }
+        }
+    }
+    return pop();
+}
+
+void printPostfix(char postfix[]) {
+    int i;
+    for (i = 0; postfix[i] != '\0'; i++)
+        printf("%c", postfix[i]);
+}
+
+int main() {
+    char postfix[MAX];
+    printf("Enter Postfix expression: ");
+    scanf("%s", postfix);
+
+    printf("Postfix expression: ");
+    printPostfix(postfix);
+    printf("\n");
+    printf("Result: %d\n", evaluatePostfix(postfix));
+    return 0;
+}
