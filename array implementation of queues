@@ -50,7 +50,7 @@ void display() {
         exit(1);
     }
     for (i = front; i <= rear; i++) {
-        printf("%d ", Q[i]);a
+        printf("%d ", Q[i]);
     }
     printf("\n");
 }
