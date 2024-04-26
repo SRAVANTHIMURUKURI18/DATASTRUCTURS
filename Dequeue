@@ -1,0 +1,85 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 100
+int dq[MAX];
+int front=-1;
+int rear=-1;
+
+void InsertFront(int d){
+    if(front==0 && rear==MAX-1){
+        printf("QUEUE IS FULL\n");
+        return;
+    }
+    if(front==0){
+        printf("Insertion is not possible");
+        return;
+    }
+    if(front==-1){
+        front=rear=0;
+    }
+    else{
+        front=front-1;
+    }
+    dq[front]=d;
+}
+void InsertRear(int d){
+    if(front==0 && rear==MAX-1){
+        printf("QUEUE IS FULL\n");
+        return;
+    }
+    if(rear==MAX-1){ 
+        printf("Insertion is not possible");
+        return;
+    }
+    if(rear==-1){
+        front=rear=0;
+    }
+    else{
+        rear=rear+1; 
+    }
+    dq[rear]=d;
+}
+void deleteFront(){ 
+    if(front==-1 || front>rear){
+        printf("QUEUE IS EMPTY\n"); 
+        return;
+    }
+    if(front==rear){
+        front=rear=-1;
+    }
+    else{
+        front=front+1;
+    }
+}
+void deleterear(){ 
+    if(front==-1 || front>rear){
+        printf("QUEUE IS EMPTY\n"); 
+        return;
+    }
+    if(front==rear){
+        front=rear=-1;
+    }
+    else{
+        rear=rear-1;
+    }
+}
+void display(){
+    int i;
+    if(front==-1){
+        printf("QUEUE IS EMPTY\n");
+        return;
+    }
+    for(i=front;i<=rear;i++){
+       printf("%d ",dq[i]); 
+    }
+    printf("\n");
+}
+int main(){
+    InsertFront(10);
+    InsertRear(20); 
+    deleteFront();
+    deleterear();
+    InsertRear(32);
+    display();
+    return 0; 
+}
