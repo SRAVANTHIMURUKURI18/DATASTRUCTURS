@@ -1,0 +1,67 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *left;
+    struct node *right;
+    
+};
+struct node *createNode(int d){
+    struct node *temp=(struct node *)malloc(sizeof(struct node *));
+    temp->left=NULL;
+    temp->right=NULL;
+    temp->data=d;
+}
+struct node *insert(struct node *root,int d){
+    if(root==NULL){
+        return createNode(d);
+    }
+    else {
+        if(d<root->data){
+        root->left=insert(root->left,d);
+    }
+    
+       else if (d>root->data){
+           root->right=insert(root->right,d);
+       }
+    return root;
+}
+}
+void inOrder(struct node *root){
+    if(root->left!=NULL){
+    inOrder(root->left);
+    }
+    printf("%d\n",root->data);
+    
+    if(root->right!=NULL){
+    inOrder(root->right);
+    }
+}
+int main(){
+    struct node *root=NULL;
+    root=insert(root,50);
+    root=insert(root,20);
+    root=insert(root,10);
+    root=insert(root,60);
+    inOrder(root);
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
